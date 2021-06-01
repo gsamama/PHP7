@@ -5,6 +5,10 @@ class Carro{
   private $motor;
   private $ano;
 
+  // constructor
+  public Carro(){}
+
+  // getters and setters
   public getModelo(){return $this->modelo;}
   public setModelo($modelo){$this->modelo = $modelo;}
 
