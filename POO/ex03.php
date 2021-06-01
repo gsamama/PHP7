@@ -45,8 +45,8 @@ class Documento {
   }
 }
 $cpf = new Documento();
-$cpf->setNumero("19717963878");
+$cpf->setNumero("12345678912");
 echo "<hr />";
-var_dump($cpf->getNumero());
-
+//var_dump($cpf->getNumero());
+var_dump(Documento::validarCpf("12345678912"));
 ?>
