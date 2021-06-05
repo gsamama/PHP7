@@ -18,7 +18,7 @@ class Usuario {
   public function getDtCadastro(){return $this->dtcadastro;}
   public function setDtCadastro($value){$this->dtcadastro=$value;}
 
-  public function loadById($id){
+  public function getById($id){
 
     $sql = new Sql();
     $results = $sql->select("SELECT * FROM tb_usuarios WHERE idusuario =:ID" , array(":ID"=>$id));
@@ -30,7 +30,42 @@ class Usuario {
       $this->setDesSenha($row['dessenha']);
       $this->setDtCadastro(new DateTime($row['dtcadastro']));
     }
+    else{
+      throw new Exception("ERROR COLLECTING DATA");
+    }
   }
+
+  public static function getAll(){
+    $sql = new Sql();
+    return $sql->select("SELECT * FROM tb_usuarios ORDER BY deslogin;");
+  }
+
+  public static function search($search){
+    $sql = new Sql();
+    return $sql->select("SELECT * FROM tb_usuarios WHERE deslogin like :SEARCH", array(':SEARCH'=>"%".$search."%"));
+  }
+
+  public function login($login, $password){
+    $sql = new Sql();
+    $results = $sql->select("SELECT * FROM tb_usuarios WHERE deslogin =:LGN AND dessenha= :PWD" , array(
+      ":LGN"=>$login,
+      ":PWD"=>$password));
+
+    if(isset($results[0])){
+      $row = $results[0];
+      $this->setIdUsuario($row['idusuario']);
+      $this->setDesLogin($row['deslogin']);
+      $this->setDesSenha($row['dessenha']);
+      $this->setDtCadastro(new DateTime($row['dtcadastro']));
+    }
+    else{
+      throw new Exception("LOGIN/PASSWORD INVALID");
+    }
+  }
+
+
+
+
 
   public function __toString(){
     return json_encode(

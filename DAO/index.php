@@ -4,13 +4,22 @@ require_once("config.php");
 
 $sql = new Sql();
 
-//$usuarios = $sql->select("SELECT * FROM tb_usuarios");
-
 $usuario = new Usuario();
+// just one user
+//$usuario->getById(2);
 
-$usuario->loadById(2);
+//echo "single record: " . $usuario;
+//echo "<hr />";
 
-//echo json_encode($usuarios);
+// many users
+//$list = Usuario::getAll();
+//echo "list: <br />";
+//echo json_encode($list);
+//$list2 = Usuario::search("ei");
+//echo json_encode($list2);
+
+// load user with login and password
+$usuario->login("Weisfooder","123123");
 echo $usuario;
 
 ?>
