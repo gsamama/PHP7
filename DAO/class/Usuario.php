@@ -24,11 +24,7 @@ class Usuario {
     $results = $sql->select("SELECT * FROM tb_usuarios WHERE idusuario =:ID" , array(":ID"=>$id));
 
     if(isset($results[0])){
-      $row = $results[0];
-      $this->setIdUsuario($row['idusuario']);
-      $this->setDesLogin($row['deslogin']);
-      $this->setDesSenha($row['dessenha']);
-      $this->setDtCadastro(new DateTime($row['dtcadastro']));
+      $this->setData($results[0]);
     }
     else{
       throw new Exception("ERROR COLLECTING DATA");
@@ -52,21 +48,39 @@ class Usuario {
       ":PWD"=>$password));
 
     if(isset($results[0])){
-      $row = $results[0];
-      $this->setIdUsuario($row['idusuario']);
-      $this->setDesLogin($row['deslogin']);
-      $this->setDesSenha($row['dessenha']);
-      $this->setDtCadastro(new DateTime($row['dtcadastro']));
+      $this->setData($results[0]);
     }
     else{
       throw new Exception("LOGIN/PASSWORD INVALID");
     }
   }
 
+  public function setData($data){
+    $this->setIdUsuario($data['idusuario']);
+    $this->setDesLogin($data['deslogin']);
+    $this->setDesSenha($data['dessenha']);
+    $this->setDtCadastro(new DateTime($data['dtcadastro']));
+  }
+
+  public function insert(){
+    $sql = new Sql();
+    $results = $sql->select("CALL sp_usuarios_insert(:LGN, :PWD)", 
+      array(
+        ':LGN'=>$this->getDesLogin(), 
+        ':PWD'=>$this->getDesSenha()
+      )
+    );
+    if(count($results)>0) {
+      $this->setData($results[0]);
+    }
+  }
 
 
 
-
+  public function __construct($login="", $password=""){
+    $this->setDesLogin($login);
+    $this->setDesSenha($password);
+  }
   public function __toString(){
     return json_encode(
       array(
