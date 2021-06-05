@@ -4,7 +4,13 @@ require_once("config.php");
 
 $sql = new Sql();
 
-//$usuario = new Usuario();
+$usuario = new Usuario();
+
+$usuario->getById(1);
+$usuario->update('FirstUserName', 'FirstUserPassword');
+
+
+
 // just one user
 //$usuario->getById(2);
 
@@ -12,8 +18,8 @@ $sql = new Sql();
 //echo "<hr />";
 //$usuario->setDesLogin('teste3');
 //$usuario->setDesSenha('teste3');
-$usuario = new Usuario('teste4', 'teste4');
-$usuario->insert();
+//$usuario = new Usuario('teste4', 'teste4');
+//$usuario->insert();
 
 // many users
 $list = Usuario::getAll();
