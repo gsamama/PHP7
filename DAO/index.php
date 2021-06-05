@@ -9,8 +9,14 @@ $usuario = new Usuario();
 $usuario->getById(1);
 $usuario->update('FirstUserName', 'FirstUserPassword');
 
-
-
+$usuario->getById(11);
+$usuario->delete();
+$usuario->getById(12);
+$usuario->delete();
+$usuario->getById(13);
+$usuario->delete();
+$usuario->getById(14);
+$usuario->delete();
 // just one user
 //$usuario->getById(2);
 
